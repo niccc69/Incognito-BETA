@@ -56,12 +56,12 @@
     },
     {
         "title": "TikTok",
-        "img": "./img/apps/tiktok.webp",
+        "img": "./img/apps/tiktok.png",
         "location": "https://www.tiktok.com"
     },
     {
         "title": "HBO Max",
-        "img": "./img/apps/hbomax.webp",
+        "img": "./img/apps/hbomax.png",
         "location": "https://www.hbomax.com"
     }
 ]

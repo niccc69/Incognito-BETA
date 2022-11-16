@@ -53,5 +53,15 @@
         "title": "Netflix",
         "img": "./img/apps/netflix.png",
         "location": "https://www.netflix.com"
+    },
+    {
+        "title": "TikTok",
+        "img": "./img/apps/tiktok.png",
+        "location": "https://www.tiktok.com"
+    },
+    {
+        "title": "HBO Max",
+        "img": "./img/apps/hbomax.png",
+        "location": "https://www.hbomax.com"
     }
 ]

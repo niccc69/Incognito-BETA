@@ -63,5 +63,10 @@
         "title": "HBO Max",
         "img": "./img/apps/hbomax.png",
         "location": "https://www.hbomax.com"
+    },
+     {
+        "title": "Addicting Games",
+        "img": "./img/apps/addictinggames.png",
+        "location": "https://www.addictinggames.com"
     }
 ]

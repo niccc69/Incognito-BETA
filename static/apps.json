@@ -19,6 +19,11 @@
         "img": "./img/apps/twt.png",
         "location": "https://twitter.com/explore"
     },
+     {
+        "title": "Instagram",
+        "img": "./img/apps/instagram.png",
+        "location": "https://instagram.com"
+    },
     {
         "title": "Reddit",
         "img": "./img/apps/rt.png",

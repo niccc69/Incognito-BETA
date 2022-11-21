@@ -21,7 +21,7 @@
     },
      {
         "title": "Instagram",
-        "img": "./img/apps/instagram.svg",
+        "img": "./img/apps/instagram.png",
         "location": "https://instagram.com"
     },
     {
@@ -73,5 +73,10 @@
         "title": "Addicting Games",
         "img": "./img/apps/addictinggames.png",
         "location": "https://www.addictinggames.com"
+    },
+     { 
+        "title": "Snapchat",
+        "img": "./img/apps/snapchat.png",
+        "location": "https://www.web.snapchat.com"
     }
 ]

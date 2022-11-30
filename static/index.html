@@ -1,5 +1,12 @@
 <html>
     <head>
+        
+        <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="login-page.css">
+  <script defer src="login-page.js"></script>
+        
         <link rel="stylesheet" href="login-page.css">
         <title>
             Kiwi's Incognito
@@ -7,6 +14,22 @@
           <link rel="icon" type="image/x-icon" href="https://kiweeter123.github.io/file-playstation-1-logo-4.png">
     </head>
     <body>
-                  <iframe width="1305" height="645" style="border:none;" src="https://kiweeter123.github.io/login_page/login.html" frameborder="0" allowfullscreen class="video-iframe"></iframe>
+                  <main id="main-holder">
+    <h1 id="login-header">Kiwi's Lair Login</h1>
+    <div class="kiwipic">
+    <img src="https://kiweeter123.github.io/kiwipic.png" alt="Kiwi Picture" style="width:175px;height:175px;">
+    </div>
+    
+    <div id="login-error-msg-holder">
+      <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+    </div>
+    
+    <form id="login-form">
+      <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+      <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+      <input type="submit" value="Login" id="login-form-submit">
+    </form>
+  
+  </main>
     </body>
 </html>

@@ -79,3 +79,6 @@ body {
   cursor: pointer;
   outline: none;
 }
+.fullscreen {
+  text-align:center;
+}

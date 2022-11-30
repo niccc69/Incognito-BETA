@@ -476,3 +476,7 @@ nav *:last-child {
     top: 0;
     z-index: -1;
 }
+
+.fullscreen {
+  text-align:center;
+}

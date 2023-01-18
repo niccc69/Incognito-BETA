@@ -75,8 +75,8 @@
         "location": "https://www.addictinggames.com"
     },
      { 
-        "title": "Snapchat",
-        "img": "./img/apps/snapchat.png",
-        "location": "https://www.web.snapchat.com"
+        "title": "Stremio - Only Works with Configurations",
+        "img": "./img/apps/stremio-purple-small.png",
+        "location": "https://stremio-pwa.pages.dev"
     }
 ]

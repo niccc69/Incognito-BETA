@@ -83,5 +83,10 @@
         "title": "Sleepr",
         "img": "./img/apps/sleeper.png",
         "location": "https://www.sleeper.com"
-     }
+     },
+     {
+        "title": "Stremio",
+        "img": "./img/apps/stremio.png",
+        "location": "https://web.stremio.com/#/intro?form=login"
+    }
 ]

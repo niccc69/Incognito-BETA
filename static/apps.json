@@ -88,5 +88,10 @@
         "title": "Stremio",
         "img": "./img/apps/stremiofinal.png",
         "location": "https://web.stremio.com/#/intro?form=login"
+    },
+    {
+        "title": "Bard",
+        "img": "./img/apps/bard.png",
+        "location": "https://bard.google.com"
     }
 ]

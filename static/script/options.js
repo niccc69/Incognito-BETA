@@ -48,12 +48,13 @@ async function options(app) {
         { id: 'google', content: 'Google' },
         { id: 'ddg', content: 'DuckDuckGo' },
         { id: 'bing', content: 'Bing' },
-        { id: 'brave', content: 'Brave' }
+        { id: 'brave', content: 'Brave' },
+        { id: 'startpage', content: 'Startpage' }
     ]
 
     const searchEngineSuggestions = [
-        { id: 'ddg', content: 'DuckDuckGo' },
-        { id: 'brave', content: 'Brave' },
+        ...searchEngines,
+        { id: 'ecosia', content: 'Ecosia' },
         { id: 'none', content: 'None' }
     ]
 
@@ -146,7 +147,7 @@ async function options(app) {
         localStorage.setItem('incog||disabletips', id)
     })
 
-    disableTips.switchSelector(localStorage.getItem('incog||disabletips') || 'enabled');
+    disableTips.switchSelector((localStorage.getItem('incog||disabletips') || 'enabled'));
 
     tabs.on('switch', id => {
         document.querySelectorAll('[data-selected]').forEach(node => {
@@ -242,12 +243,12 @@ async function options(app) {
                 events: {
                     keydown(event) {
                         if(event.key === 'Enter') {
-                            if(event.target.value == null || event.target.value == '') {} else {
+                            if(!(event.target.value == null || event.target.value == '')) {
                                 var url;
                                 try {url = new URL(event.target.value) } catch {
-                                    try {url = new URL('https://' + event.target.value)} catch {}
+                                    try {url = new URL('http://' + event.target.value)} catch {}
                                 }
-                                if(url) tabURL(url);
+                                if(url) tabURL(url.toString());
                             }
                         }
                     }
@@ -352,8 +353,8 @@ The about:blank script is based off of ABC by
 */
                         try {
                             var page = window.open()
-                            page.document.body.innerHTML = `<iframe style="height:100%; width: 100%; border: none; position: fixed; top: 0; right: 0; left: 0; bottom: 0; border: none" sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation allow-top-navigation-by-user-activation" src="` + window.location.href + `"></iframe>`
-                        } catch {}
+                            page.document.body.innerHTML = `<iframe style="height:100%; width: 100%; border: none; position: fixed; top: 0; right: 0; left: 0; bottom: 0; border: none" sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation allow-top-navigation-by-user-activation" src="${window.location.href}"></iframe>`
+                        } catch {return}
                         window.location.replace((localStorage.getItem('incog||ab') || 'https://google.com'))
                         }
                     }
@@ -500,8 +501,8 @@ The about:blank script is based off of ABC by
         events: {
             click() {
                 tabs.switchTab('search');
-                searchSelection.switchSelector(localStorage.getItem('incog||search'));
-                searchSuggestionSelection.switchSelector(localStorage.getItem('incog||suggestions'));
+                searchSelection.switchSelector((localStorage.getItem('incog||search') || 'google'));
+                searchSuggestionSelection.switchSelector((localStorage.getItem('incog||suggestions') || 'ddg'));
             }
         },
         id: 'search'
@@ -531,12 +532,7 @@ The about:blank script is based off of ABC by
     tabs.switchTab('appearance');
 
     app.search.back.style.display = 'inline';
-    app.search.back.setAttribute(
-        'onclick',
-        '(' + (function(){
-            window.location.hash = '';
-        }).toString() + ')();'
-    )
+	app.search.back.href = '#';
     app.main.content = tabs.element;
 }
 
@@ -622,17 +618,10 @@ async function createAbout(app) {
     ]
 };
 
-async function tabURL(parsedURL) {
-    // Totally not a mess of code from Tsunami 2.0 and HolyUB modified to work with Incognito
-    var res = await fetch(__uv$config.bare + 'v1/', {headers: {
-            'x-bare-host': parsedURL.hostname,
-            'x-bare-protocol': parsedURL.protocol,
-            'x-bare-path': (function() {if(parsedURL.pathname.endsWith('/') || parsedURL.pathname.endsWith('')) return parsedURL.pathname; else return '/'})(),
-            'x-bare-port': (function() {if(parsedURL.protocol == 'https:') return 443; else return 80})(),
-            'x-bare-headers': JSON.stringify({ Host: parsedURL.hostname }),
-            'x-bare-forward-headers': '[]'
-        }
-    })
+async function tabURL(url) {
+    // A mess of code from Tsunami 2.0 and HolyUB modified to work with Incognito
+    const res = await app.bare.fetch(url);
+    const parsedURL = new URL(res.finalURL);
     var dom = new DOMParser().parseFromString(await res.text(), "text/html");
     var title = parsedURL.href;
     if(dom.getElementsByTagName("title")[0]) title = dom.getElementsByTagName("title")[0].innerText;

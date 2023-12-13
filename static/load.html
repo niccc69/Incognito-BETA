@@ -86,44 +86,45 @@
         </p>
     </div>
     <script>
+        const engines = {
+            google: 'https://google.com/search?q=%s',
+            ddg: 'https://duckduckgo.com/?q=%s',
+            bing: 'https://bing.com/search?q=%s',
+            brave: 'https://search.brave.com/search?q=%s',
+            startpage: 'https://www.startpage.com/sp/search?query=%s'
+        };
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./uv.sw-handler.js', {
-                scope: '/'
-            }).then(() => {
+            navigator.serviceWorker.getRegistration("./uv.sw-handler.js").then(async worker => {
+                if(!worker) await navigator.serviceWorker.register('./uv.sw-handler.js', { scope: __uv$config.prefix });
                 let url = atob(decodeURIComponent(window.location.hash.slice(1)));
-                let search;
-                switch (localStorage.getItem('incog||search')) {
-                    case 'google':
-                        search = 'https://google.com/search?q='
-                        break;
-                    case 'ddg':
-                        search = 'https://duckduckgo.com/?q='
-                        break;
-                    case 'bing':
-                        search = 'https://bing.com/search?q='
-                        break;
-                    case 'brave':
-                        search = 'https://search.brave.com/search?q='
-                        break;
-                    default:
-                        localStorage.setItem('incog||search', 'google')
-                        search = 'https://google.com/search?q='
-                };
+                let search = engines[localStorage.getItem('incog||search') || 'google'];
                 if (url) {
-                    if (!isUrl(url)) url = search + url;
+					console.log(search, url);
+                    if (!isUrl(url)) url = search.replace('%s', url);
                     else if (!(url.startsWith('https://') || url.startsWith('http://'))) { url = 'http://' + url; };
                 } else { url = new URL(search).origin }
                 window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
             });
         } else {
             document.querySelector('.lds-dual-ring').remove();
-            document.querySelector('.info').textContent = 'Your browser does not support service workers or is blocking them (private browsing mode?). Try swapping or updating your browser.'
+            if(window.location.protocol == 'http:') {
+                document.querySelector('.info').textContent = 'You are using http:// and your browser seems to be blocking service workers because of that. Try using https://.'
+            } else {
+                document.querySelector('.info').textContent = `Your browser does not support service workers or is blocking them (private browsing mode?). Try swapping or updating your browser.`
+            }
         };
 
         function isUrl(val = '') {
-            if (/^http(s?):\/\//.test(val) || val.includes('.') && val.substr(0, 1) !== ' ') return true;
-            return false;
+            return (/^http(s?):\/\//.test(val) || isSubdomain(val)) ? true : false;
         }
+
+		function isSubdomain(val) {
+			try {
+				const url = new URL(`http://${input}`);
+    			if (url.hostname.includes(".")) return true;
+			} catch {}
+			return false;
+		}
     </script>
 </body>
 </html>
